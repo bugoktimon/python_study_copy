@@ -20,25 +20,25 @@ base_stop_words = {'노인', '참석', '일동', '주민',
 # 각 단어별 분석 결과를 담을 딕셔너리
 profiling_result = {}
 
-for target in base_stop_words:
+for target in base_stop_words: # 순서에 상관없이 대기 
     indices = []  # 이 단어가 발견된 모든 인덱스를 저장할 리스트
     start_index = 0  # 검색을 시작할 위치 (0번 글자부터 시작)
     
-    while True:
+    while True: # while은 내부 break 로 끊어야함.
         # start_index 이후부터 target 단어를 찾습니다.
-        pos = word.find(target, start_index)
+        pos = word.find(target, start_index) # (찾고 싶은 단어, 그 단어의 자리 번호). start_index 는 그 자리부터 찾게 되는 것임. find은 단어 위치 찾고 그 위치 리턴하고 종료.
         
         
         # 더 이상 단어가 발견되지 않으면 (-1) 반복을 멈춥니다.
         if pos == -1:
-            break
+            break # return은 거기서 함수 자체가 종결됨/ break는 내 블럭 안에서만 끝이다.  / continue 건너뛰기. 그 다음 차례로 넘어감.
             
         indices.append(pos)  # 발견된 위치 기록
         start_index = pos + 1  # ⭐ 중요: 다음 검색은 발견된 위치 '바로 다음 칸'부터 시작!
         
     # 단어가 한 번이라도 등장했다면 결과에 기록합니다.
     if indices:
-        profiling_result[target] = {
+        profiling_result[target] = {       # 딕셔너리  나의펫 = {}  => 나이펫["고양이(키)"] = "겨울이(밸류)" => 나의펫 = {고양이 : 겨울이}
             "빈도수(Count)": len(indices),
             "등장위치(Indices)": indices
         }
